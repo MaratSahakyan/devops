@@ -16,12 +16,6 @@ export class UserService {
             password: "strongPassword2!",
             age: 21,
         },
-        {
-            id: '3',
-            userName: "Mike Tyson",
-            password: "strongPassword2!",
-            age: 21,
-        },
     ];
 
     async getUserById(id: string) {
