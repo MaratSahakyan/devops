@@ -2,9 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import { TestModule } from '../src/TestModule';
 import * as request from 'supertest';
-import { clearDb } from './db/utils';
-import { DataSource } from 'typeorm';
 import { UserModule } from '../src/user/user.module';
+import { DataSource } from 'typeorm';
+import { clearDb } from './db/utils';
 
 let app: INestApplication;
 
@@ -15,8 +15,8 @@ describe('UserController (e2e)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
-
     const dataSource: DataSource = moduleFixture.get<DataSource>(DataSource);
+
     await clearDb(dataSource);
 
     await app.init();
