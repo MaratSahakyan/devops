@@ -19,6 +19,17 @@ jobs:
       run: npm run build
     - name: Run tests
       run: npm run test:e2e
+
+    services:
+      postgres:
+        image: postgres:latest
+        ports:
+          - 65432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: devops
+
       
       
       
