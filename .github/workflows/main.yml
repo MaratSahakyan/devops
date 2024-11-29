@@ -15,8 +15,18 @@ jobs:
         node-version: '22.11.0'
     - name: Install dependencies
       run: npm install
+    - name: Wait for PostgreSQL
+      run: |
+        until pg_isready -h postgres -p 5432 -U postgres; do
+          echo "Waiting for PostgreSQL to be ready..."
+          sleep 5
+          done
+    - name: Synchronize database
+      run: |
+        export DATABASE_SYNCHRONIZE=true
     - name: Build code
       run: npm run build
+
     - name: Run tests
       run: npm run test:e2e
 
@@ -27,8 +37,14 @@ jobs:
           - 65432:5432
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: password
+          POSTGRES_PASSWORD: mysecretpassword
           POSTGRES_DB: devops
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+      
 
       
       
