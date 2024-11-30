@@ -41,8 +41,7 @@ jobs:
           done
 
       - name: Load environment variables
-        run: |
-          cat .env >> $GITHUB_ENV
+        run: cat .env >> $GITHUB_ENV
 
       - name: Create .env file
         run: |
