@@ -10,11 +10,11 @@ jobs:
       postgres:
         image: postgres:latest
         ports:
-          - 5432:5432
+          - ${{ secrets.DATABASE_PORT }}:5432
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: mysecretpassword
-          POSTGRES_DB: devops
+          POSTGRES_USER: ${{ secrets.DATABASE_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.DATABASE_DB }}
         options: >-
           --health-cmd="pg_isready -U postgres"
           --health-interval=10s
@@ -44,14 +44,16 @@ jobs:
         run: |
           cat .env >> $GITHUB_ENV
 
-#      - name: Export environment variables
-#        run: |
-#          echo "DATABASE_HOST=localhost" >> $GITHUB_ENV
-#          echo "DATABASE_PORT=5432" >> $GITHUB_ENV
-#          echo "DATABASE_USER=postgres" >> $GITHUB_ENV
-#          echo "DATABASE_PASSWORD=mysecretpassword" >> $GITHUB_ENV
-#          echo "DATABASE_DB=devops" >> $GITHUB_ENV
-#          echo "DATABASE_SYNCHRONIZE=true" >> $GITHUB_ENV
+      - name: Create .env file
+        run: |
+          cat <<EOF > .env
+          DATABASE_HOST=${{ secrets.DATABASE_HOST }}
+          DATABASE_PORT=${{ secrets.DATABASE_PORT }}
+          DATABASE_USER=${{ secrets.DATABASE_USER }}
+          DATABASE_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+          DATABASE_DB=${{ secrets.POSTGRES_DB }}
+          DATABASE_SYNCHRONIZE=${{ secrets.DATABASE_SYNCHRONIZE }}
+          EOF
 
       - name: Build code
         run: npm run build
