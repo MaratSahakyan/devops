@@ -10,7 +10,7 @@ jobs:
       postgres:
         image: postgres:latest
         ports:
-          - ${{ secrets.DATABASE_PORT }}:5432
+          - 65432:5432
         env:
           POSTGRES_USER: ${{ secrets.DATABASE_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
