@@ -33,18 +33,21 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Set env
-        run: echo "GITHUB_SHA_SHORT=$(echo $GITHUB_SHA | cut -c 1-6)" >> $GITHUB_ENV
-
-      - name: Test
-        run: echo $GITHUB_SHA_SHORT
-
       - name: Wait for PostgreSQL
         run: |
           until pg_isready -h localhost -p 5432 -U postgres; do
             echo "Waiting for PostgreSQL to be ready..."
             sleep 5
           done
+
+#      - name: Export environment variables
+#        run: |
+#          echo "DATABASE_HOST=localhost" >> $GITHUB_ENV
+#          echo "DATABASE_PORT=5432" >> $GITHUB_ENV
+#          echo "DATABASE_USER=postgres" >> $GITHUB_ENV
+#          echo "DATABASE_PASSWORD=mysecretpassword" >> $GITHUB_ENV
+#          echo "DATABASE_DB=devops" >> $GITHUB_ENV
+#          echo "DATABASE_SYNCHRONIZE=true" >> $GITHUB_ENV
 
       - name: Build code
         run: npm run build
