@@ -42,12 +42,12 @@ jobs:
 
       - name: Export environment variables
         run: |
-          echo "DATABASE_HOST=localhost" >> $GITHUB_ENV
-          echo "DATABASE_PORT=5432" >> $GITHUB_ENV
+          echo "DATABASE_HOST=${{ secrets.DATABASE_HOST }}" >> $GITHUB_ENV
+          echo "DATABASE_PORT=${{ secrets.DATABASE_PORT }}" >> $GITHUB_ENV
           echo "DATABASE_USER=${{ secrets.DATABASE_USER }}" >> $GITHUB_ENV
           echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> $GITHUB_ENV
           echo "DATABASE_DB=${{ secrets.DATABASE_DB }}" >> $GITHUB_ENV
-          echo "DATABASE_SYNCHRONIZE=true" >> $GITHUB_ENV
+          echo "DATABASE_SYNCHRONIZE=${{ secrets.DATABASE_SYNCHRONIZE }}" >> $GITHUB_ENV
 
       - name: Build code
         run: npm run build
