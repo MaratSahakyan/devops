@@ -41,17 +41,18 @@ jobs:
           done
 
       - name: Load environment variables
-        run: cat .env >> $GITHUB_ENV
+        run: |
+          cat .env >> $GITHUB_ENV
 
       - name: Create .env file
         run: |
           cat <<EOF > .env
-          DATABASE_HOST=${{ secrets.DATABASE_HOST }}
-          DATABASE_PORT=${{ secrets.DATABASE_PORT }}
-          DATABASE_USER=${{ secrets.DATABASE_USER }}
+          DATABASE_HOST=localhost
+          DATABASE_PORT=5432
+          DATABASE_USER=postgres
           DATABASE_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
           DATABASE_DB=${{ secrets.POSTGRES_DB }}
-          DATABASE_SYNCHRONIZE=${{ secrets.DATABASE_SYNCHRONIZE }}
+          DATABASE_SYNCHRONIZE=true
           EOF
 
       - name: Build code
