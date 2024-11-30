@@ -40,6 +40,10 @@ jobs:
             sleep 5
           done
 
+      - name: Load environment variables
+        run: |
+          cat .env >> $GITHUB_ENV
+
 #      - name: Export environment variables
 #        run: |
 #          echo "DATABASE_HOST=localhost" >> $GITHUB_ENV
