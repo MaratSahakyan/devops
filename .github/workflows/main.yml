@@ -40,15 +40,17 @@ jobs:
             sleep 5
           done
 
+      - name: Export environment variables
+        run: |
+          echo "DATABASE_HOST=localhost" >> $GITHUB_ENV
+          echo "DATABASE_PORT=5432" >> $GITHUB_ENV
+          echo "DATABASE_USER=postgres" >> $GITHUB_ENV
+          echo "DATABASE_PASSWORD=mysecretpassword" >> $GITHUB_ENV
+          echo "DATABASE_DB=devops" >> $GITHUB_ENV
+          echo "DATABASE_SYNCHRONIZE=true" >> $GITHUB_ENV
+
       - name: Build code
         run: npm run build
 
       - name: Run tests
-        env:
-          DATABASE_HOST: localhost
-          DATABASE_PORT: 5432
-          DATABASE_USER: ${{ secrets.POSTGRES_USER }}
-          DATABASE_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          DATABASE_DB: ${{ secrets.POSTGRES_DB }}
-          DATABASE_SYNCHRONIZE: true
         run: npm run test:e2e
